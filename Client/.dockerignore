@@ -1,0 +1,17 @@
+node_modules
+dist
+dist-ssr
+.env
+.env.*
+*.local
+*.log
+logs
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+.git
+.gitignore
+Dockerfile
+.dockerignore
+coverage

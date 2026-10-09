@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: jobparser_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jobparser-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  server:
+    build: ./Server
+    container_name: jobparser_server
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      PORT: 3000
+      API_KEY: ${API_KEY}
+      CURL_COUNTRIES: ${CURL_COUNTRIES}
+      CURL_ROLE: ${CURL_ROLE}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - jobparser-network
+
+  client:
+    build: ./client
+    container_name: jobparser_client
+    restart: unless-stopped
+    environment:
+      # Vite читает переменные с префиксом VITE_
+      VITE_URL_SERVER: http://localhost:3000/api
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+    networks:
+      - jobparser-network
+
+networks:
+  jobparser-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

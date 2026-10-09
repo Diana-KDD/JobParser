@@ -5,7 +5,8 @@ export default async function syncCountries(countries) {
   let success = 0;
   let failed = 0;
 
-  if (countries.length === 0) throw new Error("The array length is <= 0");
+  if (!Array.isArray(countries) || countries.length === 0)
+    throw new Error("The array length is <= 0 or the array is not an array");
 
   try {
     for (const element of countries) {

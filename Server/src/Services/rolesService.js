@@ -5,7 +5,8 @@ export default async function syncRoles(roles) {
   let success = 0;
   let failed = 0;
 
-  if (roles.length === 0) throw new Error("The array length is <= 0");
+  if (!Array.isArray(roles) || roles.length === 0)
+    throw new Error("The array length is <= 0 or the array is not an array");
 
   try {
     for (const element of roles) {

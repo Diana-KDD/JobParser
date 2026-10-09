@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+body {
+  padding: 50px;
+  background-color: rgb(216, 226, 220);
+}
+
+.titlePage {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.link {
+  color: rgb(65, 78, 70);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: gray;
+}

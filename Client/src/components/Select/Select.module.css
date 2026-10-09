@@ -1,0 +1,14 @@
+.select {
+  padding: 5px 15px;
+  width: 40%;
+  border-radius: 10px;
+  border: 3px dashed gray;
+}
+
+.select:hover {
+  background-color: lightgray;
+}
+
+.option {
+  background-color: white;
+}

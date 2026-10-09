@@ -13,3 +13,13 @@ export async function addRole(title, slug, parent_slug) {
     return false;
   }
 }
+
+export async function getRowsRole() {
+  try {
+    const { rows } = await pool.query("SELECT * FROM roles");
+    return rows;
+  } catch (err) {
+    console.error("Error when getting rows roles:", err.message);
+    throw err;
+  }
+}

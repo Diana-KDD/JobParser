@@ -20,6 +20,8 @@ export async function parsing(apiKey, url) {
       },
     });
 
+    console.log("Response status:", response.status);
+
     if (response.ok) {
       const resJson = await response.json();
       return resJson.data;

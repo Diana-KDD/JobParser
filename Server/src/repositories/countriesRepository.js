@@ -12,3 +12,13 @@ export async function addCountry(country_code, name) {
     return false;
   }
 }
+
+export async function getRowsCountry() {
+  try {
+    const { rows } = await pool.query("SELECT * FROM countries");
+    return rows;
+  } catch (err) {
+    console.error("Error when getting rows country:", err.message);
+    throw err;
+  }
+}

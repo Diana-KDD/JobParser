@@ -2,6 +2,10 @@ import init from "./config/init.js";
 import { parsing } from "./parsing.js";
 import syncCountries from "./Services/countriesService.js";
 import syncRoles from "./Services/rolesService.js";
+import express from "express";
+import countryRouter from "./routes/countryRouter.js";
+import roleRouter from "./routes/roleRouter.js";
+import cors from "cors";
 
 init();
 
@@ -22,3 +26,13 @@ try {
 } catch (err) {
   console.error(err.message);
 }
+
+const app = express();
+const port = process.env.PORT || 3000;
+app.use(cors({ origin: "http://localhost:5173" }));
+app.use("/", countryRouter);
+app.use("/", roleRouter);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
